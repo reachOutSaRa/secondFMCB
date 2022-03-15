@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
 Test set: TestSuite
 -------------------------------------------------------------------------------
-Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.48 sec - in TestSuite
+Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 96.217 s <<< FAILURE! - in TestSuite
+com.iscp.tests.CucumberRunnerTests.runScenario["Scenario -Login with invalid credentials", "Optional[Feature - Login to HRM Application]"](3)  Time elapsed: 20.601 s  <<< FAILURE!
+java.lang.AssertionError: expected [Username can be empty] but found [Username cannot be empty]
+
+com.iscp.tests.CucumberRunnerTests.runScenario["Scenario -Login with invalid credentials", "Optional[Feature - Login to HRM Application]"](4)  Time elapsed: 12.552 s  <<< FAILURE!
+java.lang.AssertionError: expected [Password can be empty] but found [Password cannot be empty]
+

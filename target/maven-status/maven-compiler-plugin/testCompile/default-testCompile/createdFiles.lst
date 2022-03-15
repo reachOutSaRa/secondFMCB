@@ -1,6 +1,9 @@
 com/iscp/tests/TestRunner.class
+com/iscp/stepDefinitions/CommonDefinitions.class
 com/iscp/stepDefinitions/eCommerceScreens/DeliverySelectionPageStepDefs.class
 com/iscp/stepDefinitions/eCommerceScreens/ShoppingPageStepDefs.class
 com/iscp/utilities/EnvironmentData.class
 com/iscp/stepDefinitions/eCommerceScreens/SuccessPageStepDefs.class
+com/iscp/stepDefinitions/LoginDefinition.class
+com/iscp/tests/CucumberRunnerTests.class
 com/iscp/utilities/BaseTest.class

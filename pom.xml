@@ -9,29 +9,53 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <selenium.version>4.1.2</selenium.version>
+        <cucumber.version>7.2.3</cucumber.version>
+        <testng.version>7.4.0</testng.version>
+        <allure.cucumber5.version>2.17.3</allure.cucumber5.version>
+        <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <aspectj.version>1.9.5</aspectj.version>
-        <tests.directory>src\test\resources\testSuites</tests.directory>
-        <tests.xmlFiles>automationFramework\defaultRegressionSuite.xml</tests.xmlFiles>
-        <testExecution>Local</testExecution>
+        <aspectj.version>1.9.6</aspectj.version>
+        <allure.maven.version>2.10.0</allure.maven.version>
     </properties>
 
     <dependencies>
+        <!--Cucumber Dependencies-->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
-            <version>7.2.3</version>
+            <version>${cucumber.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-testng</artifactId>
-            <version>7.2.3</version>
-        </dependency>
+
+        <!--Selenium Dependency-->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.1.2</version>
+            <version>${selenium.version}</version>
+        </dependency>
+        <!--Cucumber TestNG Dependency-->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!--Hamcrest Dependency-->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--Allure Cucumber Dependency-->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-cucumber5-jvm</artifactId>
+            <version>${allure.cucumber5.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -54,11 +78,6 @@
             <artifactId>testng</artifactId>
             <version>7.5</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-cucumber4-jvm</artifactId>
-            <version>2.17.3</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -90,45 +109,24 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.6.1</version>
                 <configuration>
-                    <encoding>UTF-8</encoding>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
 
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.0.0-M4</version>
-                <configuration>
-                    <properties>
-                        <property>
-                            <name>listener</name>
-                            <value>com.axp.automationFramework.utilities.ISuiteListeners</value>
-                        </property>
-                    </properties>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
+                <version>${maven.surefire.plugin.version}</version>
                 <configuration>
-                    <skipTests>false</skipTests>
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <!--<reportsDirectory>target/surefire-reports</reportsDirectory>-->
-                    <!--<suiteXmlFiles>
-                        <suiteXmlFile>${tests.directory}\${tests.xmlFiles}</suiteXmlFile>
-                        <testExecution>${testExecution}</testExecution>
-                    </suiteXmlFiles>-->
+                    <suiteXmlFiles>
+                        <suiteXmlFile>TestNG.xml</suiteXmlFile>
+                    </suiteXmlFiles>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                        -Dcucumber.options="--plugin io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm"
+                        -Dcucumber.options="--plugin io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm"
                     </argLine>
-                    <systemPropertyVariables>
-                        <allure.results.directory>target/allure-results
-                        </allure.results.directory>
-                    </systemPropertyVariables>
+
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -138,39 +136,15 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
-                <version>2.10.0</version>
+                <version>${allure.maven.version}</version>
                 <configuration>
                     <reportVersion>2.9.0</reportVersion>
-                    <!--<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>-->
-                    <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
-                    <allureDownloadUrl>
-                        https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/%s/allure-commandline-%s.zip
-                    </allureDownloadUrl>
-                    <properties>
-                        <allure.issues.tracker.pattern>http://example.com/%s</allure.issues.tracker.pattern>
-                    </properties>
-
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>1_maven.apache.org</id>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <url>https://repo.maven.apache.org/maven2</url>
-            <layout>default</layout>
-        </repository>
-    </repositories>
-
-
 </project>
